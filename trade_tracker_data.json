@@ -1,0 +1,41 @@
+{
+  "trades": {},
+  "day_trades": [
+    {
+      "symbol": "MRC",
+      "entry_time": "2025-03-14T14:40:56.948954",
+      "exit_time": "2025-03-14T14:40:56.948957",
+      "contracts": 3
+    },
+    {
+      "symbol": "PPI",
+      "entry_time": "2025-03-14T14:43:52.535107",
+      "exit_time": "2025-03-14T14:43:52.535111",
+      "contracts": 3
+    },
+    {
+      "symbol": "MCD",
+      "entry_time": "2025-03-14T14:52:29.704581",
+      "exit_time": "2025-03-14T14:52:29.704588",
+      "contracts": 3
+    },
+    {
+      "symbol": "XLY",
+      "entry_time": "2025-03-14T15:08:23.702159",
+      "exit_time": "2025-03-14T15:08:23.702162",
+      "contracts": 3
+    },
+    {
+      "symbol": "BTBT",
+      "entry_time": "2025-03-14T15:08:24.053670",
+      "exit_time": "2025-03-14T15:08:24.053673",
+      "contracts": 3
+    },
+    {
+      "symbol": "XLU",
+      "entry_time": "2025-03-14T15:08:24.344789",
+      "exit_time": "2025-03-14T15:08:24.344792",
+      "contracts": 6
+    }
+  ]
+}

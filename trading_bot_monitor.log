@@ -1,0 +1,516 @@
+2025-03-14 12:03:27,297 - INFO - Trading Bot Status Report: {
+  "timestamp": "2025-03-14 12:03:20",
+  "bot_processes": [
+    {
+      "pid": 588,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 1500,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 1708,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 2584,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 2784,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 3372,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe C:\\Users\\Cameron\\AppData\\Roaming\\Python\\Python313\\Scripts\\streamlit.exe run src/main.py"
+    },
+    {
+      "pid": 3576,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 4228,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 4848,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 6016,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 7636,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 9132,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 10608,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 12868,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 13960,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 14136,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 14200,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 16336,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 16548,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 16844,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 18084,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 18296,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 19384,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 19796,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 20264,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 20488,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 20832,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21232,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21312,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21328,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21444,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21452,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21472,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21512,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21652,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 21844,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 22096,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 22728,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 23424,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 23852,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24008,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24444,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24516,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24544,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24636,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 24708,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25040,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25140,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25208,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25424,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25536,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25548,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 25844,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe C:\\Users\\Cameron\\AppData\\Roaming\\Python\\Python313\\Scripts\\streamlit.exe run src/main.py"
+    },
+    {
+      "pid": 25996,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 26132,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27096,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27192,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27200,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27468,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27608,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 27924,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 28240,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 28340,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 28396,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 28532,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 28832,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29048,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29320,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29332,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29360,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29400,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29496,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29576,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29800,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29820,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 29824,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 30272,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 30924,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 31044,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 31212,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 31904,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32004,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32084,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32108,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32168,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32300,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32456,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 32572,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 33500,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 33928,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Python313\\python.exe -m streamlit run src/main.py -- --logger.level=debug"
+    },
+    {
+      "pid": 33992,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 34024,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 34520,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 35976,
+      "memory_mb": 0.02,
+      "cmdline": "C:\\Users\\Cameron\\OneDrive\\Documents\\WIPOP\\.venv\\Scripts\\python.exe -m streamlit run src/main.py"
+    },
+    {
+      "pid": 43064,
+      "memory_mb": 21.78,
+      "cmdline": "Unknown (high memory Python process)"
+    },
+    {
+      "pid": 43568,
+      "memory_mb": 20.56,
+      "cmdline": "C:\\Python313\\python.exe main.py"
+    }
+  ],
+  "scheduled_tasks": [
+    {
+      "task": "Morning Analysis",
+      "scheduled_time": "2025-03-14 09:00:00",
+      "status": "Should have run",
+      "minutes_ago": 183.5
+    },
+    {
+      "task": "Midday Analysis",
+      "scheduled_time": "2025-03-14 12:00:00",
+      "status": "Should have run",
+      "minutes_ago": 3.5
+    },
+    {
+      "task": "Random Check",
+      "scheduled_time": "2025-03-14 12:00:00",
+      "status": "Should have run",
+      "minutes_ago": 3.5,
+      "next_check": "2025-03-14 14:00:00"
+    }
+  ],
+  "market_data": {
+    "data_files": [],
+    "last_updated": null
+  },
+  "monitored_symbols": [
+    "OXY",
+    "KO",
+    "SPY",
+    "X"
+  ]
+}

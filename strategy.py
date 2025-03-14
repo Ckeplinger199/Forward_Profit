@@ -13,7 +13,7 @@ def compute_technicals(price_data):
         dict: Technical indicators including RSI, moving averages, etc.
     """
     # Check if we have enough data
-    if len(price_data) < 50:
+    if len(price_data) < 30:
         print("Warning: Not enough price data for reliable technical indicators")
         return {'rsi': None, 'ma50': None, 'ma20': None}
     
@@ -31,7 +31,7 @@ def compute_technicals(price_data):
     
     # Calculate moving averages
     ma20 = price_data['close'].rolling(window=20).mean()
-    ma50 = price_data['close'].rolling(window=50).mean()
+    ma50 = price_data['close'].rolling(window=min(50, len(price_data)-1)).mean()
     
     # Get the latest values
     latest_rsi = rsi.iloc[-1] if not pd.isna(rsi.iloc[-1]) else None
@@ -102,21 +102,16 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
         option_chain (dict, optional): Pre-fetched option chain data
         
     Returns:
-        str: OCC option symbol (format: SPY_YYMMDD[C/P]Strike)
+        str: Option symbol in Tradier's expected format
     """
-    # This is a placeholder - in a real implementation, you would:
-    # 1. Get the current price of the underlying stock
-    # 2. Find an expiration date closest to your target
-    # 3. Select a strike price (e.g., ATM or slightly OTM)
-    # 4. Construct the OCC option symbol
-    
-    # Example placeholder implementation
     import datetime
     
     # Get current date and target expiration
     today = datetime.datetime.now()
     expiry = today + datetime.timedelta(days=expiration_days)
-    expiry_str = expiry.strftime("%y%m%d")
+    
+    # Format expiry date for Tradier API (YYYY-MM-DD)
+    tradier_expiry = expiry.strftime("%Y-%m-%d")
     
     # Assume we're using a strike price 5% higher for calls, 5% lower for puts
     if price_data is not None and not price_data.empty:
@@ -127,12 +122,18 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
     
     if signal == 'BUY_CALL':
         strike = round(current_price * 1.05)
-        option_type = 'C'
+        option_type = 'call'
     else:  # BUY_PUT
         strike = round(current_price * 0.95)
-        option_type = 'P'
+        option_type = 'put'
     
-    # Construct OCC symbol
-    option_symbol = f"{symbol}_{expiry_str}{option_type}{strike}"
+    # Construct Tradier-compatible option symbol
+    # Format: symbol + YYMMDD + C/P + Strike (padded)
+    expiry_code = expiry.strftime("%y%m%d")
+    option_code = "C" if option_type == "call" else "P"
+    strike_padded = f"{strike:.2f}".replace(".", "")
+    
+    # Tradier format: e.g., SPY220617C00400000
+    option_symbol = f"{symbol}{expiry_code}{option_code}{strike_padded.zfill(8)}"
     
     return option_symbol

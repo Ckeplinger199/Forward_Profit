@@ -6,6 +6,11 @@ TRADIER_API_KEY = "asvbrhCEAHQMWDARnBOcFaRVPED8"  # Production API key
 TRADIER_SANDBOX_KEY = "OglEGAAEnliosD2uB4R0ux9vXxJG"  # Sandbox API key for testing
 USE_SANDBOX = True  # Set to False for real trading
 
+# API endpoints
+TRADIER_PRODUCTION_URL = "https://api.tradier.com/v1"
+TRADIER_SANDBOX_URL = "https://sandbox.tradier.com/v1"
+TRADIER_BASE_URL = TRADIER_SANDBOX_URL if USE_SANDBOX else TRADIER_PRODUCTION_URL
+
 # Perplexity API for news fetching
 # Get your API key from https://perplexity.ai
 PERPLEXITY_API_KEY = "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"
@@ -26,10 +31,18 @@ EMAIL_PASSWORD = "Fordfriendsclub22"
 DEEPSEEK_API_KEY = "sk-6ab60858c77d42989ea28c76379f7c5a"
 
 # Watchlist symbols to monitor
-SYMBOLS = ["OXY", "KO", "SPY", "X", "MDC"]  # Corrected MDC (not MCD)
+SYMBOLS = ["OXY", "KO", "SPY", "X",]  
 
 # Tradier account settings
-ACCOUNT_ID = "6YB52094"
+PRODUCTION_ACCOUNT_ID = "6YB52094"  # Production account ID 
+SANDBOX_ACCOUNT_ID = "VA8259127"  # Sandbox account ID for testing
+ACCOUNT_ID = SANDBOX_ACCOUNT_ID if USE_SANDBOX else PRODUCTION_ACCOUNT_ID  # Automatically selects correct account based on mode
+
+# Sandbox fallback settings
+# If true, the system will fall back to market data only mode when sandbox account access fails
+ENABLE_SANDBOX_FALLBACK = True
+# If true, will log detailed API responses for debugging
+DEBUG_API_RESPONSES = True
 
 # Trading parameters
 MAX_POSITIONS = 5  # Maximum number of open positions
