@@ -1,0 +1,179 @@
+# Automated AI-Powered Options Trading Bot
+
+This project implements a Python-based automated trading bot designed to execute call and put options trades leveraging AI-driven sentiment analysis and technical indicators. The bot integrates with **DeepSeek AI** and **Perplexity AI** for advanced sentiment and reasoning capabilities and executes trades using the **Tradier API**.
+
+## Project Overview
+The bot operates in clearly separated modules:
+- **Data Acquisition & Sentiment Analysis**
+- **AI-Based Reasoning (DeepSeek AI)**
+- **Trade Decision Logic**
+- **Trade Execution (Tradier API)**
+- **Automated Email Reporting**
+- **Optional TensorTrade Integration for Backtesting**
+
+## Prerequisites
+- **Python >= 3.10**
+- **Tradier API keys (Sandbox and/or Production)**
+- **DeepSeek AI API access via Perplexity API**
+- **Perplexity Deep Research and Search API access**
+- **Gmail account** (for daily email reporting)
+
+## Installation & Setup
+
+### 1. Clone the Repository
+```bash
+git clone <your-repo-url>
+cd options_trading_program
+```
+
+### 2. Install Dependencies
+Ensure you have Python 3.9+ installed.
+```bash
+pip install requests schedule talib numpy pandas
+```
+
+### 2. Configure API Keys
+
+Create a `config.py` file in your project directory with your specific API keys and parameters:
+
+```python
+# config.py
+
+# Tradier API
+TRADIER_API_KEY = "your_tradier_production_key"
+TRADIER_SANDBOX_KEY = "your_tradier_sandbox_key"
+USE_SANDBOX = True  # Set False for live trading
+ACCOUNT_ID = "your_tradier_account_id"
+
+# DeepSeek/Perplexity API Keys
+PERPLEXITY_API_KEY = "your_perplexity_api_key"
+
+# Gmail Reporting
+GMAIL_USER = "your_email@gmail.com"
+GMAIL_PASSWORD = "your_app_specific_gmail_password"
+
+# Watchlist
+SYMBOLS = ["AAPL", "TSLA", "SPY", "NVDA"]
+
+# Budget
+INITIAL_BUDGET = 600
+```
+
+### 2. Install Dependencies
+
+Install Python dependencies using pip:
+
+```bash
+pip install requests schedule smtplib talib pandas numpy
+```
+
+### 2. Optional (TensorTrade Setup)
+
+If TensorTrade is used for backtesting:
+```bash
+pip install tensortrade-ng
+```
+
+This is optional and only recommended for strategy backtesting.
+
+### 3. Configure Automated Email Reporting
+
+Enable Gmail SMTP and create an [app password](https://support.google.com/accounts/answer/185833?hl=en) for security:
+- Log in to your Google Account.
+- Navigate to [Security](https://myaccount.google.com/security).
+- Under "Signing in to Google," select **App Passwords**.
+- Create an app password and use it in `config.py`.
+
+### 4. Cloud Deployment
+For simplicity, you can deploy the bot using cloud providers such as:
+- **DigitalOcean Droplet** (minimal configuration, easy setup)
+- **AWS EC2 instance** (for scalability)
+- **Google Cloud VM instance** (straightforward and easy)
+
+#### Example Deployment (DigitalOcean):
+- Create an account on [DigitalOcean](https://cloud.digitalocean.com/).
+- Launch a basic Ubuntu 22.04 droplet ($6/mo).
+- SSH into the droplet and install Python:
+```bash
+apt update && apt upgrade
+apt install python3 python3-pip git -y
+```
+
+- Clone the repository and install requirements:
+```bash
+git clone <repo-url>
+cd <repo-folder>
+pip install -r requirements.txt
+```
+
+- Run the bot in the background:
+```bash
+nohup python main.py &
+```
+
+### 4. Scheduling & Automation
+
+The bot will automatically perform tasks according to the internal schedule defined in `main.py`.
+
+## Running the Bot
+
+Simply execute the main script:
+
+```bash
+python main.py
+```
+
+### Program Workflow
+The bot performs:
+- **Daily morning analysis:** 30 min before market opens (9:00 AM ET).
+- **Midday analysis:** Noon ET.
+- **Irregular Reasoning Checks:** Every few hours or triggered by market volatility.
+- **Daily email report:** 4:00 PM ET market close.
+
+## Tradier Sandbox vs. Production Mode
+- Use `TRADIER_API_KEY` and production endpoint for live trading.
+- For paper (sandbox) trading, switch to `TRADIER_SANDBOX_KEY` and sandbox endpoint by adjusting `USE_SANDBOX = True` in your config file.
+
+## Running the Program
+To start the bot, run:
+```bash
+python main.py
+```
+The bot runs continuously. Logs and trade reports are emailed daily.
+
+## Project Structure
+```
+options_trading_bot/
+├── main.py                 # Main orchestrator
+├── config.py               # API keys and parameters
+├── ai_analysis.py          # Market news & AI reasoning
+├── strategy.py             # Trade decision logic
+├── execution.py            # Tradier API trade execution
+├── backtest.py (optional)  # TensorTrade backtesting
+├── report.py               # Email reporting module
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
+```
+
+## Limitations & Risks
+- Trading involves risk; the bot doesn't guarantee profits.
+- Ensure proper testing in Tradier's sandbox before using real funds.
+- Monitor AI costs closely to stay within your budget.
+
+## Troubleshooting
+If issues arise:
+- Check logs (printed to terminal or a `logs.txt` file).
+- Ensure correct API keys and permissions.
+- Verify cloud server uptime periodically.
+
+## Future Enhancements
+- Enhance risk management (stop-losses, take-profits).
+- Add additional technical analysis indicators.
+- Optimize AI model parameters based on performance data.
+
+---
+
+You're ready to start automating your options trading with advanced AI insights!
+
+**Happy Trading!**
+
