@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  trading-bot:
+    build: .
+    container_name: trading-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./log_archives:/app/log_archives
+    environment:
+      - TZ=America/New_York
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os; exit(0 if os.path.exists('/app/logs/trading_bot.log') else 1)"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s

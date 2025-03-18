@@ -6,7 +6,7 @@ import pandas as pd
 import re
 from datetime import datetime, timedelta
 from config import DEEPSEEK_API_KEY, PERPLEXITY_API_KEY
-from market_data import get_latest_price_data
+from market_data import get_latest_price_data, validate_option_symbol
 from strategy import compute_technicals, decide_trade
 
 # Set up logging
@@ -73,7 +73,7 @@ def fetch_opportunity_news():
     """
     logger.info("Fetching news for opportunity identification")
     
-    query = f"What are the top 10 stocks with unusual options activity or significant news catalysts today ({datetime.now().strftime('%Y-%m-%d')})? Focus on stocks with high volatility and clear directional signals."
+    query = f"What are the top 10 stocks with unusual options activity or significant news catalysts today? List the stock ticker with \"$\" before it ({datetime.now().strftime('%Y-%m-%d')})? Focus on stocks with high volatility and clear directional signals."
     
     if PERPLEXITY_API_KEY and PERPLEXITY_API_KEY != "your_perplexity_api_key":
         try:
@@ -158,10 +158,62 @@ def extract_tickers_from_news(news_text):
     ticker_pattern = r'\(([A-Z]{1,5})\)|\b([A-Z]{2,5})\b'
     
     # Common words that might be mistaken for tickers
-    common_words = {'A', 'I', 'AM', 'PM', 'CEO', 'CFO', 'CTO', 'AI', 'ML', 'API', 'USA', 'UK', 'EU', 
-                   'GDP', 'CPI', 'IPO', 'ETF', 'MACD', 'RSI', 'EPS', 'PE', 'THE', 'FOR', 'AND', 'OR',
-                   'IS', 'ARE', 'WAS', 'WERE', 'BE', 'BEEN', 'BEING', 'HAVE', 'HAS', 'HAD', 'DO', 'DOES',
-                   'DID', 'CAN', 'COULD', 'WILL', 'WOULD', 'SHALL', 'SHOULD', 'MAY', 'MIGHT', 'MUST' , 'YTD', 'NYSE', 'NASDAQ', 'S&P', 'Dow', 'SP'}
+    common_words = common_words = {
+    # Original set
+    'A', 'I', 'AM', 'PM', 'CEO', 'VIX', 'CFO', 'CTO', 'AI', 'ML', 'API', 'USA', 'US', 'UK', 'EU', 
+    'GDP', 'CPI', 'IPO', 'ETF', 'MACD', 'RSI', 'EPS', 'PE', 'THE', 'FOR', 'AND', 'OR',
+    'IS', 'ARE', 'WAS', 'WERE', 'BE', 'BEEN', 'BEING', 'HAVE', 'HAS', 'HAD', 'DO', 'DOES',
+    'DID', 'CAN', 'COULD', 'WILL', 'WOULD', 'SHALL', 'SHOULD', 'MAY', 'MIGHT', 'MUST', 'YTD', 
+    'NYSE', 'NASDAQ', 'S&P', 'DOW', 'SP', 'DJIA', 'FED', 'QE', 'USD', 'EUR', 'GBP', 'JPY', 'CNY',
+    'CAD', 'AUD', 'CHF', 'HKD', 'NZD', 'KRW', 'INR', 'NHTSA', 'BOJ', 'ECB', 'IMF', 'WTO', 'OPEC',
+    'DXY', 'TSX', 'FTSE', 'DAX', 'BNPL', 'SEC', 'FINRA', 'WTI', 'ESG', 'FOMC', 'COP', 'NFT', 'CBDC',
+    'CDC', 'WHO', 'FDA', 'EPA', 'DOJ', 'IRS', 'CIA', 'FBI', 'NSA', 'DEA', 'DOE', 'DOD', 'HHS', 'DHS',
+    'QQQ', 'SSE', 'HSI', 'ASX', 'BTC', 'ETH', 'LTC', 'XRP', 'USDT', 'USDC', 'BNB', 'SOL', 'ADA', 'DOT',
+    
+    # Common financial terms
+    'APR', 'APY', 'ATH', 'ATL', 'ATM', 'AUM', 'BPS', 'CAGR', 'CAPE', 'CBOE', 'COO', 'CRO', 'DCF', 'DD',
+    'EBIT', 'EBITDA', 'EMH', 'EOD', 'EOM', 'EOY', 'EV', 'FANG', 'FAANG', 'GAAP', 'ICO', 'IRR', 'KPI', 'LBO',
+    'LIBOR', 'LTCG', 'MBS', 'MOM', 'NAV', 'NOI', 'NPV', 'OTC', 'P2P', 'PEG', 'PPP', 'QOQ', 'ROA', 'ROE',
+    'ROI', 'ROIC', 'ROR', 'SaaS', 'SMA', 'SOFR', 'SPAC', 'STCG', 'TTM', 'VAR', 'WACC', 'YOY',
+    
+    # Common words that are actual tickers
+    'ALL', 'GOOD', 'REAL', 'TRUE', 'FAST', 'SAFE', 'CASH', 'PLAY', 'LIFE', 'LOVE', 'PEAK', 'CUBE', 'WELL',
+    'LAND', 'LUNG', 'LEG', 'CAT', 'DOG', 'SKY', 'DISH', 'COLD', 'CONE', 'FORD', 'ZION', 'RCM', 'MDC', 'F',
+    'BIG', 'NOW', 'GO', 'ON', 'OUT', 'UP', 'DOWN', 'LOW', 'HIGH', 'EVER', 'NEXT', 'LAST', 'FIRST', 'BEST',
+    
+    # Trading slang and jargon
+    'ATH', 'BTFD', 'FOMO', 'FUD', 'HODL', 'MOON', 'YOLO', 'BULL', 'BEAR', 'TIGER', 'WHALE',
+    
+    # Common abbreviations
+    'AN', 'AS', 'AT', 'BY', 'IF', 'IN', 'IT', 'ME', 'MY', 'NO', 'OF', 'OH', 'OK', 'ON', 'SO', 'TO', 'UP',
+    'WE', 'AMP', 'INC', 'LLC', 'LTD', 'PLC', 'AG', 'SA', 'SE', 'NV', 'BV', 'CO', 'LLP', 'LP', 'GP',
+    
+    # Common text/chat abbreviations
+    'IM', 'U', 'UR', 'R', 'B', 'C', 'K', 'N', 'Y', 'IDK', 'IMO', 'TBH', 'BTW', 'FYI', 'ICYMI', 'NGL',
+    
+    # Time-related
+    'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+    'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'Q1', 'Q2', 'Q3', 'Q4', 'H1', 'H2',
+    
+    # Measurements and units
+    'KG', 'LB', 'OZ', 'CM', 'MM', 'KM', 'MI', 'FT', 'IN', 'HR', 'MIN', 'SEC', 'GB', 'MB', 'TB', 'KB',
+    
+    # Other common abbreviations
+    'CEO', 'CFO', 'COO', 'CTO', 'CMO', 'CIO', 'CSO', 'CDO', 'CHRO', 'CPO', 'EVP', 'SVP', 'VP', 'AVP',
+    'PhD', 'MBA', 'MD', 'JD', 'BS', 'BA', 'MS', 'MA', 'CFA', 'CPA', 'ACCA', 'CIMA', 'CAIA',
+    
+    # Technology terms
+    'AR', 'VR', 'XR', 'IoT', 'ML', 'DL', 'NLP', 'CV', 'UI', 'UX', 'API', 'SDK', 'IDE', 'SQL', 'NoSQL',
+    'AWS', 'GCP', 'AI', 'ML', 'GPU', 'CPU', 'RAM', 'ROM', 'SSD', 'HDD', 'LAN', 'WAN', 'VPN', 'DNS',
+    
+    # Social media
+    'FB', 'IG', 'TW', 'YT', 'LI', 'PIN', 'SC', 'TT', 'WA', 'DC',
+    
+    # Filler words
+    'THE', 'AN', 'A', 'BUT', 'BY', 'FROM', 'WITH', 'WITHOUT', 'ABOUT', 'ABOVE', 'BELOW', 'UNDER', 'OVER',
+    'BETWEEN', 'AMONG', 'THROUGH', 'THROUGHOUT', 'DURING', 'BEFORE', 'AFTER', 'SINCE', 'UNTIL', 'WHILE'
+}
+
     
     # Find all matches
     matches = re.findall(ticker_pattern, news_text)
@@ -493,7 +545,10 @@ def process_opportunities(opportunities, tradier_client):
         logger.warning("Cannot execute day trades - PDT limit reached (3 day trades in 5 business days)")
         logger.info("Only executing trades intended to be held overnight")
     
-    for opportunity in opportunities:
+    # Sort opportunities by confidence (highest first)
+    sorted_opportunities = sorted(opportunities, key=lambda x: x.get('confidence', 0), reverse=True)
+    
+    for opportunity in sorted_opportunities:
         try:
             ticker = opportunity['ticker']
             signal = opportunity['signal']
@@ -502,15 +557,23 @@ def process_opportunities(opportunities, tradier_client):
             logger.info(f"Processing opportunity for {ticker} with signal {signal} (confidence: {confidence:.2f})")
             
             # Only trade high confidence opportunities
-            if confidence < 0.75:
+            if confidence < 0.70:  # Lowered threshold to increase trading activity
                 logger.info(f"Skipping {ticker} due to insufficient confidence ({confidence:.2f})")
                 continue
             
             # Get price data for the ticker
-            price_data = get_latest_price_data(ticker)
-            
-            if price_data.empty:
-                logger.warning(f"No price data available for {ticker}")
+            try:
+                price_data = get_latest_price_data(ticker)
+                
+                if price_data.empty:
+                    logger.warning(f"No price data available for {ticker}")
+                    continue
+                    
+                if len(price_data) < 20:  # Minimum required data points
+                    logger.warning(f"Insufficient historical data for {ticker} (only {len(price_data)} days available, need at least 20)")
+                    continue
+            except Exception as e:
+                logger.error(f"Error retrieving price data for {ticker}: {str(e)}")
                 continue
             
             # Select appropriate option contract
@@ -519,6 +582,24 @@ def process_opportunities(opportunities, tradier_client):
             if not contract:
                 logger.warning(f"Could not select appropriate option contract for {ticker}")
                 continue
+            
+            # Validate option symbol format
+            if not contract or not isinstance(contract, str) or len(contract) < 15:
+                logger.warning(f"Invalid option contract format: {contract}")
+                continue
+                
+            # Validate option symbol against available option chains
+            from market_data import validate_option_symbol
+            is_valid, valid_alternative, expiration_date = validate_option_symbol(contract, ticker)
+            
+            if not is_valid:
+                if valid_alternative:
+                    logger.warning(f"Option symbol {contract} not found, using alternative: {valid_alternative}")
+                    contract = valid_alternative
+                    # Don't validate the alternative again - it came directly from the API and is valid
+                else:
+                    logger.warning(f"Option symbol {contract} not available for trading")
+                    continue
             
             # Determine number of contracts based on confidence and account size
             # Higher confidence = more contracts, scaled by account size
@@ -542,16 +623,28 @@ def process_opportunities(opportunities, tradier_client):
                 day_trade_allowed=(not pdt_applies or trade_tracker.can_day_trade())
             )
             
-            if trade_result:
+            if trade_result and "error" not in trade_result:
                 executed_trades.append({
                     'ticker': ticker,
                     'contract': contract,
                     'signal': signal,
                     'confidence': confidence,
                     'contracts': num_contracts,
-                    'result': trade_result
+                    'result': trade_result,
+                    'order_id': trade_result.get('id', 'unknown')
                 })
                 logger.info(f"Successfully executed trade for {ticker} ({num_contracts} contracts)")
+                
+                # Check order status after a brief delay to confirm it's being processed
+                if 'id' in trade_result:
+                    import time
+                    time.sleep(2)  # Brief pause to allow order processing
+                    order_status = tradier_client.get_order_status(trade_result['id'])
+                    if order_status:
+                        logger.info(f"Order status confirmation: {order_status.get('status', 'unknown')}")
+            else:
+                error_msg = trade_result.get('error', 'Unknown error') if isinstance(trade_result, dict) else 'Failed to execute trade'
+                logger.warning(f"Trade execution failed for {ticker}: {error_msg}")
             
         except Exception as e:
             logger.error(f"Error processing opportunity for {ticker}: {str(e)}")

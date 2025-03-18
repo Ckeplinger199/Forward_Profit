@@ -1,9 +1,1 @@
-2025-03-14 12:01:30,484 - INFO - Starting trading bot monitor
-2025-03-14 12:01:34,711 - INFO - Found potential trading bot processes:
-2025-03-14 12:01:34,711 - INFO - PID: 13756, Memory: 20.18 MB
-2025-03-14 12:01:34,712 - INFO - PID: 43568, Memory: 20.56 MB
-2025-03-14 12:01:34,712 - INFO - Log files found in directory:
-2025-03-14 12:01:34,712 - INFO - - bot_monitor.log (Last modified: 2025-03-14 12:01:34)
-2025-03-14 12:01:34,712 - INFO - Current time: 2025-03-14 12:01:34
-2025-03-14 12:01:34,713 - INFO - \u2705 Midday analysis should have just run (within last 5 minutes)
-2025-03-14 12:01:34,713 - INFO - Bot monitoring complete
+Log cleared at 2025-03-17 15:49:04

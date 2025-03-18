@@ -177,97 +177,63 @@ def get_option_chain(symbol, expiration=None):
     """
     if not symbol:
         logger.error("No symbol provided for option chain retrieval")
-        return {}
+        return {"calls": [], "puts": [], "expiration": expiration}
     
     # Set up the API endpoint
-    base_url = TRADIER_BASE_URL
+    url = f"{TRADIER_BASE_URL}/markets/options/chains"
     
-    # First, get available expirations if not specified
-    if expiration is None:
-        exp_url = f"{base_url}/markets/options/expirations"
-        api_key = TRADIER_SANDBOX_KEY if USE_SANDBOX else TRADIER_API_KEY
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Accept": "application/json"
-        }
-        params = {
-            "symbol": symbol,
-            "includeAllRoots": "false"
-        }
-        
-        try:
-            exp_response = requests.get(exp_url, headers=headers, params=params)
-            exp_response.raise_for_status()
-            exp_data = exp_response.json()
-            
-            if DEBUG_API_RESPONSES:
-                logger.info(f"API Response for {symbol} expirations: {json.dumps(exp_data, indent=2)}")
-            
-            if 'expirations' in exp_data and 'expiration' in exp_data['expirations']:
-                expirations = exp_data['expirations']['expiration']
-                if not expirations:
-                    logger.warning(f"No option expirations found for {symbol}")
-                    return {}
-                
-                # Choose the nearest expiration
-                if isinstance(expirations, list):
-                    expiration = expirations[0]
-                else:
-                    expiration = expirations
-                
-                logger.info(f"Using nearest expiration date for {symbol}: {expiration}")
-            else:
-                logger.warning(f"No expirations found for {symbol}")
-                return {}
-                
-        except requests.exceptions.RequestException as e:
-            logger.error(f"Failed to retrieve option expirations for {symbol}: {e}")
-            return {}
-    
-    # Now get the option chain
-    chain_url = f"{base_url}/markets/options/chains"
+    # Set up the request headers and parameters
     api_key = TRADIER_SANDBOX_KEY if USE_SANDBOX else TRADIER_API_KEY
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Accept": "application/json"
     }
     params = {
-        "symbol": symbol,
-        "expiration": expiration
+        "symbol": symbol
     }
+    
+    # Greeks are not available in sandbox mode according to documentation
+    if not USE_SANDBOX:
+        params["greeks"] = "true"
+    
+    if expiration:
+        params["expiration"] = expiration
     
     # Make the request with retry logic
     for attempt in range(MAX_RETRIES):
         try:
-            response = requests.get(chain_url, headers=headers, params=params)
+            response = requests.get(url, headers=headers, params=params)
             response.raise_for_status()
             data = response.json()
             
             if DEBUG_API_RESPONSES:
                 logger.info(f"API Response for {symbol} option chain: {json.dumps(data, indent=2)}")
             
-            if 'options' in data and 'option' in data['options']:
-                options = data['options']['option']
-                
-                # Separate calls and puts
-                calls = [opt for opt in options if opt['option_type'] == 'call']
-                puts = [opt for opt in options if opt['option_type'] == 'put']
-                
-                logger.info(f"Successfully retrieved option chain for {symbol}: {len(calls)} calls, {len(puts)} puts")
-                
-                return {
-                    "calls": calls,
-                    "puts": puts,
-                    "expiration": expiration
-                }
-            else:
-                if ENABLE_SANDBOX_FALLBACK and USE_SANDBOX:
-                    logger.warning(f"No options data found for {symbol} in sandbox mode. Using simulated data.")
-                    # Return simulated data for testing
-                    return generate_simulated_options(symbol)
+            if 'options' in data and data['options'] is not None:
+                if 'option' in data['options']:
+                    options = data['options']['option']
+                    
+                    # Extract expiration date
+                    if options and len(options) > 0:
+                        expiration = options[0]['expiration_date']
+                    
+                    # Separate calls and puts
+                    calls = [option for option in options if option['option_type'] == 'call']
+                    puts = [option for option in options if option['option_type'] == 'put']
+                    
+                    logger.info(f"Retrieved option chain for {symbol}: {len(calls)} calls, {len(puts)} puts")
+                    
+                    return {
+                        "calls": calls,
+                        "puts": puts,
+                        "expiration": expiration
+                    }
                 else:
-                    logger.warning(f"No options data found for {symbol}")
-                    return {}
+                    logger.warning(f"No options found for {symbol} with expiration {expiration}")
+                    return {"calls": [], "puts": [], "expiration": expiration}
+            else:
+                logger.warning(f"No options data found for {symbol} with expiration {expiration}")
+                return {"calls": [], "puts": [], "expiration": expiration}
                 
         except requests.exceptions.RequestException as e:
             if attempt < MAX_RETRIES - 1:
@@ -275,120 +241,30 @@ def get_option_chain(symbol, expiration=None):
                 logger.warning(f"Request failed for {symbol} option chain, retrying in {wait_time}s... Error: {e}")
                 time.sleep(wait_time)
             else:
-                if ENABLE_SANDBOX_FALLBACK and USE_SANDBOX:
-                    logger.warning(f"Failed to retrieve option chain for {symbol} in sandbox mode. Using simulated data.")
-                    # Return simulated data for testing
-                    return generate_simulated_options(symbol)
-                else:
-                    logger.error(f"Failed to retrieve option chain for {symbol} after {MAX_RETRIES} attempts: {e}")
-                    return {}
+                logger.error(f"Failed to retrieve option chain for {symbol} after {MAX_RETRIES} attempts: {e}")
+                return {"calls": [], "puts": [], "expiration": expiration}
     
-    return {}
+    return {"calls": [], "puts": [], "expiration": expiration}
 
-def generate_simulated_options(symbol):
+def handle_missing_option_data(symbol, reason="API failure"):
     """
-    Generate simulated option data for testing when sandbox API fails
+    Handle cases where option data is not available
     
     Args:
-        symbol (str): Stock symbol to generate options for
+        symbol (str): Stock symbol that's missing option data
+        reason (str): Reason for missing data
         
     Returns:
-        dict: Dictionary with simulated calls and puts
+        dict: Empty option chain structure with error information
     """
-    # Get current stock price
-    stock_price = get_current_price(symbol)
-    if not stock_price:
-        stock_price = 100.0  # Default price if we can't get real price
-        
-    # Generate expiration 30 days from now
-    expiration = (datetime.datetime.now() + datetime.timedelta(days=30)).strftime("%Y-%m-%d")
+    logger.error(f"No option data available for {symbol}: {reason}")
     
-    # Generate strikes around the current price
-    strikes = [round(stock_price * (1 + i * 0.05), 2) for i in range(-5, 6)]
-    
-    calls = []
-    puts = []
-    
-    for strike in strikes:
-        # Generate call option
-        call_price = round(max(0, stock_price - strike) + 2.0, 2)
-        call = {
-            "symbol": f"{symbol}{expiration.replace('-', '')}C{int(strike)}000",
-            "description": f"{symbol} {expiration} Call {strike}",
-            "exch": "SIMU",
-            "type": "option",
-            "last": call_price,
-            "change": 0.0,
-            "volume": 100,
-            "open": call_price,
-            "high": call_price * 1.05,
-            "low": call_price * 0.95,
-            "close": None,
-            "bid": call_price - 0.10,
-            "ask": call_price + 0.10,
-            "underlying": symbol,
-            "strike": strike,
-            "greeks": {
-                "delta": 0.5,
-                "gamma": 0.05,
-                "theta": -0.01,
-                "vega": 0.1,
-                "rho": 0.01,
-                "phi": 0.01,
-                "bid_iv": 0.3,
-                "mid_iv": 0.35,
-                "ask_iv": 0.4
-            },
-            "expiration_date": expiration,
-            "expiration_type": "standard",
-            "option_type": "call",
-            "root_symbol": symbol
-        }
-        calls.append(call)
-        
-        # Generate put option
-        put_price = round(max(0, strike - stock_price) + 2.0, 2)
-        put = {
-            "symbol": f"{symbol}{expiration.replace('-', '')}P{int(strike)}000",
-            "description": f"{symbol} {expiration} Put {strike}",
-            "exch": "SIMU",
-            "type": "option",
-            "last": put_price,
-            "change": 0.0,
-            "volume": 100,
-            "open": put_price,
-            "high": put_price * 1.05,
-            "low": put_price * 0.95,
-            "close": None,
-            "bid": put_price - 0.10,
-            "ask": put_price + 0.10,
-            "underlying": symbol,
-            "strike": strike,
-            "greeks": {
-                "delta": -0.5,
-                "gamma": 0.05,
-                "theta": -0.01,
-                "vega": 0.1,
-                "rho": -0.01,
-                "phi": 0.01,
-                "bid_iv": 0.3,
-                "mid_iv": 0.35,
-                "ask_iv": 0.4
-            },
-            "expiration_date": expiration,
-            "expiration_type": "standard",
-            "option_type": "put",
-            "root_symbol": symbol
-        }
-        puts.append(put)
-    
-    logger.info(f"Generated simulated option chain for {symbol}: {len(calls)} calls, {len(puts)} puts")
-    
+    # Return a properly structured empty result
     return {
-        "calls": calls,
-        "puts": puts,
-        "expiration": expiration,
-        "simulated": True  # Flag to indicate this is simulated data
+        "calls": [],
+        "puts": [],
+        "expiration": None,
+        "error": f"No option data available: {reason}"
     }
 
 def get_current_price(symbol):
@@ -452,3 +328,183 @@ def get_current_price(symbol):
                 return None
     
     return None
+
+def validate_option_symbol(option_symbol, underlying_symbol=None):
+    """
+    Validates if an option symbol exists in the Tradier API
+    
+    Args:
+        option_symbol (str): The option symbol to validate (e.g., 'SPY220617C00400000')
+        underlying_symbol (str, optional): The underlying symbol, extracted from option_symbol if not provided
+        
+    Returns:
+        tuple: (is_valid, valid_alternative, expiration_date)
+            - is_valid (bool): True if the option symbol is valid
+            - valid_alternative (str): A valid similar option if original not found (or None)
+            - expiration_date (str): The expiration date of the option in YYYY-MM-DD format
+    """
+    # Extract underlying symbol if not provided
+    if not underlying_symbol:
+        underlying_symbol = ""
+        for char in option_symbol:
+            if not char.isdigit():
+                underlying_symbol += char
+            else:
+                break
+        # Remove trailing non-alphanumeric characters (like C or P for call/put)
+        underlying_symbol = ''.join(c for c in underlying_symbol if c.isalnum())
+    
+    # Extract option parameters
+    try:
+        # Format is: Symbol + YYMMDD + C/P + StrikePrice
+        date_start = len(underlying_symbol)
+        date_portion = option_symbol[date_start:date_start+6]  # YYMMDD
+        option_type = option_symbol[date_start+6:date_start+7]  # C or P
+        strike_portion = option_symbol[date_start+7:]  # Strike price digits
+        
+        # Convert date to YYYY-MM-DD format for API
+        year = int("20" + date_portion[0:2])
+        month = int(date_portion[2:4])
+        day = int(date_portion[4:6])
+        expiration_date = f"{year}-{month:02d}-{day:02d}"
+        
+        # Convert strike price to float (divide by 1000 to get actual price)
+        strike_price = float(strike_portion) / 1000
+        
+        logger.info(f"Validating option: {underlying_symbol}, {expiration_date}, {option_type}, {strike_price}")
+    except Exception as e:
+        logger.error(f"Failed to parse option symbol {option_symbol}: {e}")
+        return False, None, None
+    
+    # In sandbox mode, we may want to allow trading even without validation
+    # This helps with testing when the sandbox API doesn't return real option chains
+    if USE_SANDBOX and ENABLE_SANDBOX_FALLBACK:
+        logger.info(f"Sandbox mode with fallback enabled - allowing option symbol {option_symbol} without validation")
+        return True, option_symbol, expiration_date
+    
+    # Get option chain for this expiration
+    option_chain = get_option_chain(underlying_symbol, expiration_date)
+    if not option_chain:
+        logger.warning(f"No option chain found for {underlying_symbol} with expiration {expiration_date}")
+        # In sandbox mode, be more lenient with validation
+        if USE_SANDBOX:
+            logger.info(f"Sandbox mode - allowing option symbol {option_symbol} despite missing chain")
+            return True, option_symbol, expiration_date
+        return False, None, expiration_date
+    
+    # Check if the chain is empty or null
+    if 'calls' not in option_chain or 'puts' not in option_chain:
+        logger.warning(f"Invalid option chain response for {underlying_symbol} with expiration {expiration_date}")
+        # In sandbox mode, be more lenient with validation
+        if USE_SANDBOX:
+            logger.info(f"Sandbox mode - allowing option symbol {option_symbol} despite invalid chain")
+            return True, option_symbol, expiration_date
+        return False, None, expiration_date
+    
+    # Determine which side of the chain to check
+    chain_side = "calls" if option_type.upper() == "C" else "puts"
+    if chain_side not in option_chain or not option_chain[chain_side]:
+        logger.warning(f"No {chain_side} found in option chain for {underlying_symbol}")
+        # In sandbox mode, be more lenient with validation
+        if USE_SANDBOX:
+            logger.info(f"Sandbox mode - allowing option symbol {option_symbol} despite missing {chain_side}")
+            return True, option_symbol, expiration_date
+        return False, None, expiration_date
+    
+    # Check if the exact option symbol exists
+    for option in option_chain[chain_side]:
+        if option.get('symbol') == option_symbol:
+            logger.info(f"Option symbol {option_symbol} validated successfully")
+            return True, option_symbol, expiration_date
+    
+    # If we didn't find an exact match, find the closest strike price
+    closest_option = None
+    min_diff = float('inf')
+    
+    for option in option_chain[chain_side]:
+        if abs(option.get('strike', 0) - strike_price) < min_diff:
+            min_diff = abs(option.get('strike', 0) - strike_price)
+            closest_option = option
+    
+    if closest_option:
+        alternative_symbol = closest_option.get('symbol')
+        logger.info(f"Option symbol {option_symbol} not found, but found similar option: {alternative_symbol}")
+        return False, alternative_symbol, expiration_date
+    
+    # In sandbox mode, be more lenient if no alternative was found
+    if USE_SANDBOX:
+        logger.info(f"Sandbox mode - allowing option symbol {option_symbol} despite no match or alternative")
+        return True, option_symbol, expiration_date
+        
+    return False, None, expiration_date
+
+def lookup_option_symbols(underlying_symbol, expiration=None, strike=None, option_type=None):
+    """
+    Look up valid option symbols using Tradier's lookup endpoint
+    
+    Args:
+        underlying_symbol (str): The underlying stock symbol
+        expiration (str, optional): Option expiration date in YYYY-MM-DD format
+        strike (float, optional): Strike price
+        option_type (str, optional): Option type ('call' or 'put')
+        
+    Returns:
+        list: List of matching option symbols
+    """
+    logger.info(f"Looking up option symbols for {underlying_symbol}")
+    
+    # Set up the API endpoint
+    url = f"{TRADIER_BASE_URL}/markets/options/lookup"
+    
+    # Set up the request headers and parameters
+    api_key = TRADIER_SANDBOX_KEY if USE_SANDBOX else TRADIER_API_KEY
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Accept": "application/json"
+    }
+    params = {
+        "underlying": underlying_symbol
+    }
+    
+    if expiration:
+        params["expiration"] = expiration
+    if strike:
+        params["strike"] = strike
+    if option_type and option_type.lower() in ['call', 'put']:
+        params["type"] = option_type.lower()
+    
+    # Make the request with retry logic
+    for attempt in range(MAX_RETRIES):
+        try:
+            response = requests.get(url, headers=headers, params=params)
+            response.raise_for_status()
+            data = response.json()
+            
+            if DEBUG_API_RESPONSES:
+                logger.info(f"API Response for option symbol lookup: {json.dumps(data, indent=2)}")
+            
+            if 'options' in data and data['options'] is not None:
+                if 'option' in data['options']:
+                    options = data['options']['option']
+                    if isinstance(options, list):
+                        logger.info(f"Found {len(options)} matching option symbols for {underlying_symbol}")
+                        return options
+                    else:
+                        # Single option returned
+                        logger.info(f"Found 1 matching option symbol for {underlying_symbol}")
+                        return [options]
+            
+            # If we reach here, no options were found
+            logger.warning(f"No matching option symbols found for {underlying_symbol}")
+            return []
+                
+        except requests.exceptions.RequestException as e:
+            if attempt < MAX_RETRIES - 1:
+                wait_time = RETRY_DELAY_SECONDS * (2 ** attempt)  # Exponential backoff
+                logger.warning(f"Request failed for option symbol lookup, retrying in {wait_time}s... Error: {e}")
+                time.sleep(wait_time)
+            else:
+                logger.error(f"Failed to lookup option symbols after {MAX_RETRIES} attempts: {e}")
+                return []
+    
+    return []

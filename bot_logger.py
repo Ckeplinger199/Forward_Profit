@@ -13,6 +13,50 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
+def clear_logs():
+    """
+    Clear log files to start fresh
+    
+    This function clears all log files to ensure they don't grow too large
+    and to provide a clean slate for each bot run.
+    """
+    log_files = [
+        'trading_bot.log',
+        'trading_bot_monitor.log',
+        'opportunity_test.log',
+        'test_market_hours.log',
+        'test_option_validation.log',
+        'test_order.log',
+        'bot_monitor.log'
+    ]
+    
+    for log_file in log_files:
+        try:
+            if os.path.exists(log_file):
+                # Create a backup of the log file with timestamp before clearing
+                timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+                backup_dir = 'log_backups'
+                
+                # Create backup directory if it doesn't exist
+                if not os.path.exists(backup_dir):
+                    os.makedirs(backup_dir)
+                
+                # Only backup if file has content
+                if os.path.getsize(log_file) > 0:
+                    backup_file = f"{backup_dir}/{os.path.splitext(log_file)[0]}_{timestamp}.log"
+                    with open(log_file, 'r') as src, open(backup_file, 'w') as dst:
+                        dst.write(src.read())
+                    
+                # Clear the log file
+                with open(log_file, 'w') as f:
+                    f.write(f"Log cleared at {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                
+                logging.info(f"Cleared log file: {log_file}")
+        except Exception as e:
+            logging.error(f"Error clearing log file {log_file}: {str(e)}")
+    
+    logging.info("All log files have been cleared")
+
 class TradingBotMonitor:
     def __init__(self):
         self.log_file = 'trading_bot_monitor.log'
@@ -236,6 +280,7 @@ class TradingBotMonitor:
         return status
 
 if __name__ == "__main__":
+    clear_logs()
     monitor = TradingBotMonitor()
     monitor.run_once()
     

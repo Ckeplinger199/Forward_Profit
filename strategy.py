@@ -1,6 +1,11 @@
 # strategy.py – Determine trading signals based on AI insights and technicals
 import numpy as np
 import pandas as pd
+import logging
+from config import MIN_PRICE_DATA_DAYS, RSI_PERIOD, RSI_OVERBOUGHT, RSI_OVERSOLD
+
+# Create a logger
+logger = logging.getLogger(__name__)
 
 def compute_technicals(price_data):
     """
@@ -12,37 +17,105 @@ def compute_technicals(price_data):
     Returns:
         dict: Technical indicators including RSI, moving averages, etc.
     """
+    # Define minimum required data points
+    min_data_points = getattr(MIN_PRICE_DATA_DAYS, 'value', 30)
+    
     # Check if we have enough data
-    if len(price_data) < 30:
-        print("Warning: Not enough price data for reliable technical indicators")
-        return {'rsi': None, 'ma50': None, 'ma20': None}
+    if price_data is None or price_data.empty:
+        logger.warning("No price data provided for technical analysis")
+        return {'rsi': None, 'ma50': None, 'ma20': None, 'error': 'No price data available'}
+        
+    if len(price_data) < min_data_points:
+        logger.warning(f"Insufficient price data for reliable technical indicators: {len(price_data)} days available, need at least {min_data_points}")
+        
+        # We can still calculate some indicators with limited data
+        available_days = len(price_data)
+        
+        # Return partial data with warning
+        result = {
+            'rsi': None, 
+            'ma20': None, 
+            'ma50': None,
+            'warning': f'Limited data ({available_days} days)',
+            'data_sufficient': False
+        }
+        
+        # Calculate what we can with available data
+        if available_days >= 14:  # Minimum for RSI
+            result.update(calculate_rsi(price_data))
+            
+        if available_days >= 20:  # Minimum for 20-day MA
+            result.update(calculate_ma(price_data, 20))
+            
+        return result
     
-    # Calculate RSI (Relative Strength Index) using pandas
-    # This is a simplified version of RSI calculation
-    delta = price_data['close'].diff()
-    gain = delta.where(delta > 0, 0)
-    loss = -delta.where(delta < 0, 0)
+    # We have sufficient data, calculate all indicators
+    result = {
+        'data_sufficient': True
+    }
     
-    avg_gain = gain.rolling(window=14).mean()
-    avg_loss = loss.rolling(window=14).mean()
-    
-    rs = avg_gain / avg_loss
-    rsi = 100 - (100 / (1 + rs))
+    # Calculate RSI
+    result.update(calculate_rsi(price_data))
     
     # Calculate moving averages
-    ma20 = price_data['close'].rolling(window=20).mean()
-    ma50 = price_data['close'].rolling(window=min(50, len(price_data)-1)).mean()
+    result.update(calculate_ma(price_data, 20))
+    result.update(calculate_ma(price_data, 50))
     
-    # Get the latest values
-    latest_rsi = rsi.iloc[-1] if not pd.isna(rsi.iloc[-1]) else None
-    latest_ma20 = ma20.iloc[-1] if not pd.isna(ma20.iloc[-1]) else None
-    latest_ma50 = ma50.iloc[-1] if not pd.isna(ma50.iloc[-1]) else None
+    return result
+
+def calculate_rsi(price_data, period=14):
+    """
+    Calculate RSI (Relative Strength Index)
     
-    return {
-        'rsi': latest_rsi, 
-        'ma20': latest_ma20, 
-        'ma50': latest_ma50
-    }
+    Args:
+        price_data (pandas.DataFrame): DataFrame with price history
+        period (int): RSI period
+        
+    Returns:
+        dict: RSI value
+    """
+    try:
+        # Calculate RSI using pandas
+        delta = price_data['close'].diff()
+        gain = delta.where(delta > 0, 0)
+        loss = -delta.where(delta < 0, 0)
+        
+        avg_gain = gain.rolling(window=period).mean()
+        avg_loss = loss.rolling(window=period).mean()
+        
+        rs = avg_gain / avg_loss
+        rsi = 100 - (100 / (1 + rs))
+        
+        # Get the latest value
+        latest_rsi = rsi.iloc[-1] if not pd.isna(rsi.iloc[-1]) else None
+        
+        return {'rsi': latest_rsi}
+    except Exception as e:
+        logger.error(f"Error calculating RSI: {str(e)}")
+        return {'rsi': None}
+
+def calculate_ma(price_data, period):
+    """
+    Calculate Moving Average
+    
+    Args:
+        price_data (pandas.DataFrame): DataFrame with price history
+        period (int): MA period
+        
+    Returns:
+        dict: MA value
+    """
+    try:
+        # Calculate moving average
+        ma = price_data['close'].rolling(window=min(period, len(price_data)-1)).mean()
+        
+        # Get the latest value
+        latest_ma = ma.iloc[-1] if not pd.isna(ma.iloc[-1]) else None
+        
+        return {f'ma{period}': latest_ma}
+    except Exception as e:
+        logger.error(f"Error calculating MA{period}: {str(e)}")
+        return {f'ma{period}': None}
 
 def decide_trade(ai_sentiment, ai_reasoning, technicals, symbol, price_data):
     """
@@ -61,9 +134,18 @@ def decide_trade(ai_sentiment, ai_reasoning, technicals, symbol, price_data):
     signal = None
     
     # Safety check - ensure we have price data
-    if price_data.empty or len(price_data) < 2:
-        print(f"Warning: Insufficient price data for {symbol}")
+    if price_data is None or price_data.empty:
+        logger.warning(f"No price data available for {symbol}")
         return signal
+    
+    if len(price_data) < 2:
+        logger.warning(f"Insufficient price data for {symbol}: only {len(price_data)} days available")
+        return signal
+    
+    # Check if technical data is sufficient
+    if not technicals.get('data_sufficient', True):
+        logger.warning(f"Limited technical data for {symbol}: {technicals.get('warning', 'unknown issue')}")
+        # We can still proceed with limited data, but log the warning
     
     current_price = price_data['close'].iloc[-1]
     
@@ -86,7 +168,7 @@ def decide_trade(ai_sentiment, ai_reasoning, technicals, symbol, price_data):
     trade_reasoning += f"Technical Indicators: RSI={technicals.get('rsi')}, MA50={technicals.get('ma50')}\n"
     trade_reasoning += f"AI Reasoning: {ai_reasoning}"
     
-    print(trade_reasoning)
+    logger.info(trade_reasoning)
     
     return signal
 
@@ -127,13 +209,20 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
         strike = round(current_price * 0.95)
         option_type = 'put'
     
-    # Construct Tradier-compatible option symbol
     # Format: symbol + YYMMDD + C/P + Strike (padded)
     expiry_code = expiry.strftime("%y%m%d")
     option_code = "C" if option_type == "call" else "P"
-    strike_padded = f"{strike:.2f}".replace(".", "")
+    
+    # Convert strike to a string with two decimal places, then remove decimal point
+    # Strike needs to be properly padded to 8 characters with leading zeros
+    strike_price = float(strike)
+    strike_dollars = int(strike_price)
+    strike_cents = int((strike_price - strike_dollars) * 1000)
+    strike_padded = f"{strike_dollars:05d}{strike_cents:03d}"
     
     # Tradier format: e.g., SPY220617C00400000
-    option_symbol = f"{symbol}{expiry_code}{option_code}{strike_padded.zfill(8)}"
+    option_symbol = f"{symbol}{expiry_code}{option_code}{strike_padded}"
+    
+    logger.info(f"Generated option symbol: {option_symbol} for {symbol} {expiry_code} {option_code} strike {strike}")
     
     return option_symbol

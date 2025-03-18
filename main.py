@@ -13,6 +13,7 @@ from execution import TradierClient
 from market_data import get_latest_price_data
 from config import ACCOUNT_ID, SYMBOLS
 from opportunity_finder import identify_opportunities, process_opportunities
+from bot_logger import clear_logs as bot_clear_logs
 
 # Initialize clients
 tradier = TradierClient()
@@ -26,6 +27,31 @@ EASTERN_TZ = pytz.timezone('US/Eastern')
 TRADING_BOT_LOG = 'trading_bot.log'
 TEST_ORDER_LOG = 'test_order.log'
 LOG_MAX_SIZE_MB = 10  # Maximum log size in MB before archiving
+
+def setup_logging():
+    """
+    Set up logging configuration and clear old logs
+    """
+    # Clear logs at the start of each run
+    bot_clear_logs()
+    
+    # Configure logging
+    logging.basicConfig(
+        filename=TRADING_BOT_LOG,
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        filemode='a'  # Append mode
+    )
+    
+    # Add console handler to show logs in console as well
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+    
+    logging.info("=== Trading Bot Started ===")
+    logging.info(f"Monitoring symbols: {', '.join(SYMBOLS)}")
 
 def clear_logs(max_size_mb=LOG_MAX_SIZE_MB):
     """
@@ -301,14 +327,14 @@ def run_test():
     print("=== TEST MODE COMPLETE ===\n")
     
     # Clear logs after test run
-    clear_logs()
+    bot_clear_logs()
 
 if __name__ == "__main__":
     print(f"Options Trading Bot starting at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Monitoring symbols: {', '.join(SYMBOLS)}")
     
-    # Check and clear logs at startup
-    clear_logs()
+    # Set up logging
+    setup_logging()
     
     # Uncomment to run test mode first
     run_test()
@@ -324,7 +350,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("\nBot stopped by user.")
         # Clear logs on exit
-        clear_logs()
+        bot_clear_logs()
     except Exception as e:
         print(f"\nError in main loop: {e}")
         raise
