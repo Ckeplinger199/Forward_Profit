@@ -19,15 +19,18 @@ class TradeTracker:
     A day trade is defined as buying and selling the same security on the same day.
     """
     
-    def __init__(self, data_file="trade_tracker_data.json"):
+    def __init__(self, data_file="trade_tracker_data.json", max_trades=3):
         """
         Initialize the trade tracker
         
         Args:
             data_file (str): Path to the JSON file for storing trade data
+            max_trades (int): Maximum number of day trades allowed
         """
         self.data_file = data_file
-        self.trades = {}  # Dict to track open positions: {symbol: {'entry_time': datetime, 'contracts': int}}
+        self.max_trades = max_trades
+        # Enhanced trades dict to track more position details
+        self.trades = {}  # Dict to track open positions: {symbol: {'entry_time': datetime, 'contracts': int, 'option_data': {...}}}
         self.day_trades = []  # List of day trades: [{'symbol': str, 'entry_time': datetime, 'exit_time': datetime, 'contracts': int}]
         
         # Load existing data if available
@@ -115,7 +118,7 @@ class TradeTracker:
             logger.info(f"Removed {original_count - len(self.day_trades)} expired day trades")
             self.save_data()
     
-    def add_position(self, symbol, contracts, entry_time=None):
+    def add_position(self, symbol, contracts, entry_time=None, option_data=None):
         """
         Record a new position
         
@@ -123,6 +126,7 @@ class TradeTracker:
             symbol (str): The option symbol
             contracts (int): Number of contracts
             entry_time (datetime, optional): Entry time, defaults to current time
+            option_data (dict, optional): Additional option data, defaults to None
         """
         if entry_time is None:
             entry_time = datetime.now()
@@ -134,7 +138,8 @@ class TradeTracker:
         else:
             self.trades[symbol] = {
                 'entry_time': entry_time,
-                'contracts': contracts
+                'contracts': contracts,
+                'option_data': option_data
             }
             logger.info(f"Opened new position: {contracts} contracts of {symbol}")
         
@@ -231,8 +236,8 @@ class TradeTracker:
         Returns:
             bool: True if day trades are allowed, False otherwise
         """
-        # PDT rule allows up to 3 day trades in a 5-business-day period
-        return self.get_day_trade_count() < 3
+        # Use configurable max_trades instance variable instead of global MAX_DAILY_TRADES
+        return self.get_day_trade_count() < self.max_trades
     
     def get_status(self):
         """
@@ -259,7 +264,7 @@ class TradeTracker:
         """String representation of the trade tracker status"""
         status = self.get_status()
         return (
-            f"Day Trades: {status['day_trade_count']}/3 in last 5 business days\n"
+            f"Day Trades: {status['day_trade_count']}/{self.max_trades} in last 5 business days\n"
             f"Can Day Trade: {'Yes' if status['can_day_trade'] else 'No'}\n"
             f"Open Positions: {status['open_positions']}"
         )
@@ -276,6 +281,7 @@ def get_trade_tracker():
         TradeTracker: The trade tracker instance
     """
     global _trade_tracker
+    from config import MAX_DAILY_TRADES
     if _trade_tracker is None:
-        _trade_tracker = TradeTracker()
+        _trade_tracker = TradeTracker(max_trades=MAX_DAILY_TRADES)
     return _trade_tracker

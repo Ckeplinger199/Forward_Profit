@@ -50,7 +50,7 @@ POSITION_SIZE = 0.05  # Percentage of account value per position (e.g., 0.05 = 5
 STOP_LOSS_PERCENT = 0.20  # Exit position if it loses this percentage (e.g., 0.20 = 20%)
 TAKE_PROFIT_PERCENT = 0.50  # Exit position if it gains this percentage (e.g., 0.50 = 50%)
 MAX_OPTION_DTE = 45  # Maximum days to expiration for option contracts
-MIN_OPTION_DTE = 7  # Minimum days to expiration for option contracts
+MIN_OPTION_DTE = 14  # Minimum days to expiration for option contracts
 
 # API request retry settings
 MAX_RETRIES = 3  # Maximum number of retries for API requests
@@ -58,7 +58,7 @@ RETRY_DELAY_SECONDS = 2  # Initial delay between retries (will be exponentially 
 
 # Trading activity settings
 CONFIDENCE_THRESHOLD = 0.70  # Minimum confidence to execute a trade (lowered to increase activity)
-MAX_DAILY_TRADES = 5  # Maximum number of trades per day
+MAX_DAILY_TRADES = 100  # Maximum number of trades per day
 ENABLE_OPPORTUNITY_FINDER = True  # Enable finding opportunities outside watchlist
 
 # Technical indicator parameters

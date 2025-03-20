@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 import logging
-from config import MIN_PRICE_DATA_DAYS, RSI_PERIOD, RSI_OVERBOUGHT, RSI_OVERSOLD
+from config import MIN_PRICE_DATA_DAYS, RSI_PERIOD, RSI_OVERBOUGHT, RSI_OVERSOLD, MIN_OPTION_DTE, MAX_OPTION_DTE
 
 # Create a logger
 logger = logging.getLogger(__name__)
@@ -172,7 +172,7 @@ def decide_trade(ai_sentiment, ai_reasoning, technicals, symbol, price_data):
     
     return signal
 
-def select_option_contract(symbol, signal, price_data=None, expiration_days=30, option_chain=None):
+def select_option_contract(symbol, signal, price_data=None, expiration_days=None, option_chain=None):
     """
     Select an appropriate option contract based on the trading signal.
     
@@ -180,7 +180,7 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
         symbol (str): The stock ticker symbol
         signal (str): Trading signal - 'BUY_CALL' or 'BUY_PUT'
         price_data (pandas.DataFrame, optional): DataFrame with price history
-        expiration_days (int): Target days until expiration
+        expiration_days (int, optional): Target days until expiration. If None, uses MIN_OPTION_DTE from config
         option_chain (dict, optional): Pre-fetched option chain data
         
     Returns:
@@ -188,12 +188,22 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
     """
     import datetime
     
+    # If expiration_days is not specified, use the MIN_OPTION_DTE from config
+    if expiration_days is None:
+        expiration_days = MIN_OPTION_DTE
+        logger.info(f"Using default expiration days from config: {expiration_days}")
+    
+    # Ensure expiration_days is within the configured range
+    expiration_days = max(expiration_days, MIN_OPTION_DTE)
+    expiration_days = min(expiration_days, MAX_OPTION_DTE)
+    
     # Get current date and target expiration
     today = datetime.datetime.now()
     expiry = today + datetime.timedelta(days=expiration_days)
     
     # Format expiry date for Tradier API (YYYY-MM-DD)
     tradier_expiry = expiry.strftime("%Y-%m-%d")
+    logger.info(f"Target expiration date: {tradier_expiry} ({expiration_days} days from now)")
     
     # Assume we're using a strike price 5% higher for calls, 5% lower for puts
     if price_data is not None and not price_data.empty:
@@ -226,3 +236,156 @@ def select_option_contract(symbol, signal, price_data=None, expiration_days=30, 
     logger.info(f"Generated option symbol: {option_symbol} for {symbol} {expiry_code} {option_code} strike {strike}")
     
     return option_symbol
+
+def evaluate_position(symbol, underlying_symbol, is_call, price_data, technicals, pnl_percent, market_sentiment=None, days_held=0):
+    """
+    Evaluate an existing position and determine whether to hold or sell
+    
+    Args:
+        symbol (str): The option symbol
+        underlying_symbol (str): The underlying stock symbol
+        is_call (bool): True if this is a call option, False if put
+        price_data (pandas.DataFrame): DataFrame with price history for the underlying
+        technicals (dict): Technical indicators for the underlying
+        pnl_percent (float): Current profit/loss percentage
+        market_sentiment (str, optional): Overall market sentiment (bullish/bearish/neutral)
+        days_held (int, optional): Number of days the position has been held
+        
+    Returns:
+        tuple: (decision, reasoning) where decision is one of "SELL", "PARTIAL_SELL", or "HOLD"
+    """
+    from config import STOP_LOSS_PERCENT, TAKE_PROFIT_PERCENT
+    
+    # Default decision is to hold
+    decision = "HOLD"
+    reasoning = "Default position is to hold"
+    
+    # Basic stop loss and take profit checks
+    if pnl_percent <= -STOP_LOSS_PERCENT:
+        return "SELL", f"Stop loss triggered: {pnl_percent:.2%} loss exceeds {STOP_LOSS_PERCENT:.2%} threshold"
+        
+    if pnl_percent >= TAKE_PROFIT_PERCENT:
+        return "SELL", f"Take profit triggered: {pnl_percent:.2%} gain exceeds {TAKE_PROFIT_PERCENT:.2%} threshold"
+    
+    # Check if we have sufficient technical data
+    if not technicals or 'error' in technicals:
+        return decision, "Insufficient technical data for advanced analysis, holding position"
+    
+    # Get current price and calculate recent price movement
+    if len(price_data) < 2:
+        return decision, "Insufficient price data for analysis, holding position"
+        
+    current_price = price_data['close'].iloc[-1]
+    prev_price = price_data['close'].iloc[-2]
+    price_change = (current_price - prev_price) / prev_price
+    
+    # Extract key technical indicators
+    rsi = technicals.get('rsi')
+    ma20 = technicals.get('ma20')
+    ma50 = technicals.get('ma50')
+    
+    # Initialize reasoning components
+    reasons = []
+    
+    # Analyze technical indicators for call options
+    if is_call:
+        # For call options, we want to sell if the underlying is showing bearish signals
+        
+        # Check for overbought conditions (RSI > 70)
+        if rsi and rsi > 70:
+            reasons.append(f"RSI is overbought at {rsi:.2f}")
+            decision = "SELL" if pnl_percent > 0.10 else "PARTIAL_SELL"
+        
+        # Check if price is below short-term moving average (bearish signal)
+        if ma20 and current_price < ma20:
+            reasons.append(f"Price {current_price:.2f} below MA20 {ma20:.2f}")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Check for bearish market sentiment
+        if market_sentiment == 'bearish':
+            reasons.append("Overall market sentiment is bearish")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Check for recent price decline
+        if price_change < -0.02:  # 2% drop
+            reasons.append(f"Recent price decline of {price_change:.2%}")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Positive signals that might override sell decision
+        positive_signals = 0
+        
+        # Check for strong uptrend (price above both moving averages)
+        if ma20 and ma50 and current_price > ma20 and current_price > ma50 and ma20 > ma50:
+            reasons.append(f"Strong uptrend: price above both MA20 and MA50")
+            positive_signals += 1
+            
+        # Check for bullish market sentiment
+        if market_sentiment == 'bullish':
+            reasons.append("Overall market sentiment is bullish")
+            positive_signals += 1
+            
+        # Check for recent price increase
+        if price_change > 0.02:  # 2% gain
+            reasons.append(f"Recent price increase of {price_change:.2%}")
+            positive_signals += 1
+            
+        # If we have multiple positive signals, consider holding even if there are some sell signals
+        if positive_signals >= 2 and decision != "SELL":
+            decision = "HOLD"
+            reasons.append("Multiple positive signals suggest continued upside potential")
+            
+    else:  # Put options
+        # For put options, we want to sell if the underlying is showing bullish signals
+        
+        # Check for oversold conditions (RSI < 30)
+        if rsi and rsi < 30:
+            reasons.append(f"RSI is oversold at {rsi:.2f}")
+            decision = "SELL" if pnl_percent > 0.10 else "PARTIAL_SELL"
+        
+        # Check if price is above short-term moving average (bullish signal)
+        if ma20 and current_price > ma20:
+            reasons.append(f"Price {current_price:.2f} above MA20 {ma20:.2f}")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Check for bullish market sentiment
+        if market_sentiment == 'bullish':
+            reasons.append("Overall market sentiment is bullish")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Check for recent price increase
+        if price_change > 0.02:  # 2% gain
+            reasons.append(f"Recent price increase of {price_change:.2%}")
+            decision = "SELL" if pnl_percent > 0 else "PARTIAL_SELL"
+            
+        # Positive signals for puts (bearish signals) that might override sell decision
+        positive_signals = 0
+        
+        # Check for strong downtrend (price below both moving averages)
+        if ma20 and ma50 and current_price < ma20 and current_price < ma50 and ma20 < ma50:
+            reasons.append(f"Strong downtrend: price below both MA20 and MA50")
+            positive_signals += 1
+            
+        # Check for bearish market sentiment
+        if market_sentiment == 'bearish':
+            reasons.append("Overall market sentiment is bearish")
+            positive_signals += 1
+            
+        # Check for recent price decrease
+        if price_change < -0.02:  # 2% loss
+            reasons.append(f"Recent price decrease of {price_change:.2%}")
+            positive_signals += 1
+            
+        # If we have multiple positive signals, consider holding even if there are some sell signals
+        if positive_signals >= 2 and decision != "SELL":
+            decision = "HOLD"
+            reasons.append("Multiple negative signals suggest continued downside potential")
+    
+    # Special case: If we're profitable but have held for a while, consider taking partial profits
+    if pnl_percent > 0.25 and days_held > 5 and decision == "HOLD":
+        decision = "PARTIAL_SELL"
+        reasons.append(f"Taking partial profits after {days_held} days with {pnl_percent:.2%} gain")
+    
+    # Compile the reasoning
+    reasoning = "; ".join(reasons) if reasons else "No strong signals, maintaining position"
+    
+    return decision, reasoning

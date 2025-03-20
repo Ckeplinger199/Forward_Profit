@@ -5,6 +5,7 @@ import os
 import time
 from config import PERPLEXITY_API_KEY, DEEPSEEK_API_KEY
 from datetime import datetime
+import logging
 
 def fetch_news_summary(time_of_day):
     """
@@ -16,6 +17,10 @@ def fetch_news_summary(time_of_day):
     Returns:
         str: Summary of market news
     """
+    logger = logging.getLogger(__name__)
+    
+    logger.info(f"Starting fetch_news_summary for {time_of_day}")
+    
     if time_of_day == 'pre_market':
         query = f"Today's important financial news before market open on {datetime.now().strftime('%Y-%m-%d')}"
     elif time_of_day == 'midday':
@@ -23,19 +28,22 @@ def fetch_news_summary(time_of_day):
     else:
         query = f"Latest major market updates as of {datetime.now().strftime('%Y-%m-%d')}"
     
+    logger.info(f"Fetching comprehensive market news with query: '{query}'")
+    
     print(f"Fetching comprehensive market news with query: '{query}'")
     
     # Try deep-research first, then fall back to sonar-reasoning-pro if it times out, then to regular sonar
     models_to_try = [
         {"model": "sonar-deep-research", "timeout": 400, "name": "deep research"},
-        {"model": "sonar-reasoning-pro", "timeout": 45, "name": "reasoning pro"},
-        {"model": "sonar", "timeout": 30, "name": "standard sonar"}
+        {"model": "sonar-reasoning-pro", "timeout": 60, "name": "reasoning pro"},
+        {"model": "sonar", "timeout": 60, "name": "standard sonar"}
     ]
     
     if PERPLEXITY_API_KEY and PERPLEXITY_API_KEY != "your_perplexity_api_key":
         for model_config in models_to_try:
             try:
                 print(f"Trying Perplexity {model_config['name']} model...")
+                logger.info(f"Trying Perplexity {model_config['name']} model")
                 
                 headers = {
                     "Content-Type": "application/json",
@@ -60,43 +68,53 @@ def fetch_news_summary(time_of_day):
                             json=data,
                             timeout=model_config["timeout"]
                         )
+                        logger.info(f"Perplexity API response status code: {response.status_code}")
                         response.raise_for_status()
                         result = response.json()
                         
                         content = result.get("choices", [{}])[0].get("message", {}).get("content", "")
                         if content:
                             print(f"Successfully retrieved news with {model_config['name']} model")
+                            logger.info(f"Successfully retrieved news with {model_config['name']} model")
                             return content
                     except requests.exceptions.Timeout:
                         print(f"Timeout with {model_config['name']} model (attempt {attempt+1}/{max_retries})")
+                        logger.info(f"Timeout with {model_config['name']} model (attempt {attempt+1}/{max_retries})")
                         if attempt < max_retries - 1:
                             # Exponential backoff
                             wait_time = 2 ** attempt
                             print(f"Waiting {wait_time} seconds before retry...")
+                            logger.info(f"Waiting {wait_time} seconds before retry...")
                             time.sleep(wait_time)
                         else:
                             # Move to next model after all retries
                             print(f"All retries failed with {model_config['name']} model, trying next option...")
+                            logger.info(f"All retries failed with {model_config['name']} model, trying next option...")
                             break
                     except requests.exceptions.RequestException as e:
                         print(f"Error with {model_config['name']} model: {e}")
+                        logger.info(f"Error with {model_config['name']} model: {e}")
                         if attempt < max_retries - 1:
                             wait_time = 2 ** attempt
                             print(f"Waiting {wait_time} seconds before retry...")
+                            logger.info(f"Waiting {wait_time} seconds before retry...")
                             time.sleep(wait_time)
                         else:
                             break
             except Exception as e:
                 print(f"Unexpected error with {model_config['name']} model: {e}")
+                logger.info(f"Unexpected error with {model_config['name']} model: {e}")
                 # Continue to next model
     
     # If we get here, all Perplexity models failed or no API key
     print("All Perplexity models failed or no API key, fetching from alternate source")
+    logger.info("All Perplexity models failed or no API key, fetching from alternate source")
     
     # Real fallback to Alpha Vantage
     try:
         fin_news_url = "https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=SPY,QQQ,DIA&apikey=demo"
         response = requests.get(fin_news_url, timeout=30)
+        logger.info(f"Alpha Vantage API response status code: {response.status_code}")
         response.raise_for_status()
         news_data = response.json()
         
@@ -111,6 +129,7 @@ def fetch_news_summary(time_of_day):
         return "Unable to fetch market news from any source."
     except Exception as e:
         print(f"Final fallback news source failed: {e}")
+        logger.info(f"Final fallback news source failed: {e}")
         return "Unable to fetch market news due to API errors across all services."
 
 def spot_check_news(query):
@@ -198,7 +217,9 @@ def call_deepseek_api(prompt):
     Returns:
         dict: DeepSeek API response containing reasoning and sentiment
     """
-    print(f"Analyzing market conditions with DeepSeek Reasoning model...")
+    logger = logging.getLogger(__name__)
+    
+    logger.info("Starting call_deepseek_api")
     
     try:
         # Check if we have a valid DeepSeek API key
@@ -207,8 +228,13 @@ def call_deepseek_api(prompt):
         # If not in config, try environment variable
         if not api_key or api_key == "your_deepseek_api_key":
             api_key = os.environ.get("DEEPSEEK_API_KEY")
+            logger.info("Using DeepSeek API key from environment variable")
+        else:
+            logger.info("Using DeepSeek API key from config")
         
         if api_key and api_key != "your_deepseek_api_key":
+            logger.info("DeepSeek API key is valid, proceeding with API call")
+            
             url = "https://api.deepseek.com/chat/completions"
             headers = {
                 "Content-Type": "application/json",
@@ -235,8 +261,10 @@ def call_deepseek_api(prompt):
             for attempt in range(max_retries):
                 try:
                     response = requests.post(url, headers=headers, json=data, timeout=120)
+                    logger.info(f"DeepSeek API response status code: {response.status_code}")
                     response.raise_for_status()
                     result = response.json()
+                    logger.info("Successfully received DeepSeek API response")
                     
                     # Extract content and reasoning from the DeepSeek Reasoner response
                     choices = result.get("choices", [{}])
@@ -253,7 +281,7 @@ def call_deepseek_api(prompt):
                         else:
                             sentiment = "neutral"  # Default if unclear
                         
-                        print(f"Sentiment analysis complete: {sentiment}")
+                        logger.info(f"Sentiment analysis complete: {sentiment}")
                         
                         return {
                             "sentiment": sentiment,
@@ -262,20 +290,20 @@ def call_deepseek_api(prompt):
                         }
                     break  # Exit retry loop if we got here but couldn't extract sentiment
                 except requests.exceptions.Timeout:
-                    print(f"Timeout with DeepSeek API (attempt {attempt+1}/{max_retries})")
+                    logger.info(f"Timeout with DeepSeek API (attempt {attempt+1}/{max_retries})")
                     if attempt < max_retries - 1:
                         wait_time = 2 ** attempt
-                        print(f"Waiting {wait_time} seconds before retry...")
+                        logger.info(f"Waiting {wait_time} seconds before retry...")
                         time.sleep(wait_time)
                 except requests.exceptions.RequestException as e:
-                    print(f"Error with DeepSeek API call (attempt {attempt+1}/{max_retries}): {e}")
+                    logger.info(f"Error with DeepSeek API call (attempt {attempt+1}/{max_retries}): {e}")
                     if attempt < max_retries - 1:
                         wait_time = 2 ** attempt
-                        print(f"Waiting {wait_time} seconds before retry...")
+                        logger.info(f"Waiting {wait_time} seconds before retry...")
                         time.sleep(wait_time)
         
         # If no DeepSeek API key or all retries failed, use a more basic method based on news keywords
-        print("No DeepSeek API key or API calls failed, using keyword analysis instead")
+        logger.info("No DeepSeek API key or API calls failed, using keyword analysis instead")
         
         # Simple keyword-based sentiment analysis
         bullish_keywords = ["growth", "rally", "surge", "positive", "gain", "outperform", "beat", "upgrade"]
@@ -302,7 +330,7 @@ def call_deepseek_api(prompt):
         }
             
     except Exception as e:
-        print(f"Error with DeepSeek API call: {e}")
+        logger.info(f"Error with DeepSeek API call: {e}")
         
         # Emergency fallback - not a mock, but a basic analysis
         # Based on current market conditions like time of day and day of week
@@ -340,6 +368,10 @@ def analyze_with_deepseek(news):
     Returns:
         tuple: (sentiment, reasoning, conclusion) - Market sentiment, detailed reasoning, and final conclusion
     """
+    logger = logging.getLogger(__name__)
+    
+    logger.info("Starting analyze_with_deepseek")
+    
     prompt = f"""Please analyze the following market news and determine the overall market sentiment 
     (bullish, bearish, or neutral). Provide detailed reasoning for your conclusion.
     
@@ -348,5 +380,12 @@ def analyze_with_deepseek(news):
     
     What is the overall market sentiment based on this news, and why?"""
     
+    logger.info("Calling DeepSeek API with market news prompt")
     result = call_deepseek_api(prompt)
-    return result.get('sentiment', 'neutral'), result.get('reasoning', 'No detailed reasoning available'), result.get('conclusion', 'No conclusion available')
+    sentiment = result.get('sentiment', 'neutral')
+    reasoning = result.get('reasoning', 'No detailed reasoning available')
+    conclusion = result.get('conclusion', 'No conclusion available')
+    
+    logger.info(f"DeepSeek analysis complete. Sentiment: {sentiment}")
+    
+    return sentiment, reasoning, conclusion
