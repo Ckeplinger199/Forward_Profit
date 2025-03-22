@@ -640,5 +640,1031 @@
         "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
         "order_id": 12064432,
         "timestamp": "2025-03-20 14:04:27"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 84566552,
+        "timestamp": "2025-03-20 15:04:29"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 94276945,
+        "timestamp": "2025-03-20 15:04:30"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 81023705,
+        "timestamp": "2025-03-20 15:04:31"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 16357345,
+        "timestamp": "2025-03-20 15:04:32"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 32719747,
+        "timestamp": "2025-03-20 15:04:34"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 29061241,
+        "timestamp": "2025-03-20 15:04:35"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 34476424,
+        "timestamp": "2025-03-20 16:04:38"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 97317224,
+        "timestamp": "2025-03-20 16:04:40"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 16877096,
+        "timestamp": "2025-03-20 16:04:41"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 94282117,
+        "timestamp": "2025-03-20 16:04:43"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 16356486,
+        "timestamp": "2025-03-20 16:04:45"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 58934137,
+        "timestamp": "2025-03-20 16:04:46"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 87979866,
+        "timestamp": "2025-03-20 17:22:15"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 84462514,
+        "timestamp": "2025-03-20 17:22:19"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 63816747,
+        "timestamp": "2025-03-20 17:22:22"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 92492345,
+        "timestamp": "2025-03-20 17:22:25"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 26391892,
+        "timestamp": "2025-03-20 17:22:32"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 25850061,
+        "timestamp": "2025-03-20 17:22:35"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 26309841,
+        "timestamp": "2025-03-20 18:22:38"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 79222023,
+        "timestamp": "2025-03-20 18:22:38"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 30601035,
+        "timestamp": "2025-03-20 18:22:39"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 14233185,
+        "timestamp": "2025-03-20 18:22:40"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 58869995,
+        "timestamp": "2025-03-20 18:22:41"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 19136822,
+        "timestamp": "2025-03-20 18:22:41"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 21657145,
+        "timestamp": "2025-03-20 19:04:23"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 50484515,
+        "timestamp": "2025-03-20 19:04:24"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 15966040,
+        "timestamp": "2025-03-20 19:04:25"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 25372172,
+        "timestamp": "2025-03-20 19:04:26"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 72181848,
+        "timestamp": "2025-03-20 19:04:26"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 66018248,
+        "timestamp": "2025-03-20 19:04:27"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 18676706,
+        "timestamp": "2025-03-20 19:22:45"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 58045387,
+        "timestamp": "2025-03-20 19:22:45"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 90368869,
+        "timestamp": "2025-03-20 19:22:46"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 88111833,
+        "timestamp": "2025-03-20 19:22:47"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 89258843,
+        "timestamp": "2025-03-20 19:22:48"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 10332351,
+        "timestamp": "2025-03-20 19:22:49"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 83732681,
+        "timestamp": "2025-03-20 20:22:50"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 20995709,
+        "timestamp": "2025-03-20 20:22:51"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 24545389,
+        "timestamp": "2025-03-20 20:22:52"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 13288047,
+        "timestamp": "2025-03-20 20:22:52"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 50185222,
+        "timestamp": "2025-03-20 20:22:53"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 17488965,
+        "timestamp": "2025-03-20 20:22:54"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 15081030,
+        "timestamp": "2025-03-21 05:22:43"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 88809136,
+        "timestamp": "2025-03-21 05:22:46"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 42943727,
+        "timestamp": "2025-03-21 05:22:48"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 70545402,
+        "timestamp": "2025-03-21 05:22:49"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 32431913,
+        "timestamp": "2025-03-21 05:22:51"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 94438671,
+        "timestamp": "2025-03-21 05:22:51"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 53028580,
+        "timestamp": "2025-03-21 08:16:41"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 21813158,
+        "timestamp": "2025-03-21 08:16:43"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 35991940,
+        "timestamp": "2025-03-21 08:16:45"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 37553362,
+        "timestamp": "2025-03-21 08:16:46"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 60072752,
+        "timestamp": "2025-03-21 08:16:47"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 59528109,
+        "timestamp": "2025-03-21 08:16:47"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 97030422,
+        "timestamp": "2025-03-21 09:16:58"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 49126283,
+        "timestamp": "2025-03-21 09:16:59"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 94242630,
+        "timestamp": "2025-03-21 09:17:00"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 64510645,
+        "timestamp": "2025-03-21 09:17:01"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 94144577,
+        "timestamp": "2025-03-21 09:17:02"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 69263125,
+        "timestamp": "2025-03-21 09:17:03"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 17587568,
+        "timestamp": "2025-03-21 09:32:04"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 74222596,
+        "timestamp": "2025-03-21 09:32:05"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 87198314,
+        "timestamp": "2025-03-21 09:32:07"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 81206588,
+        "timestamp": "2025-03-21 09:32:08"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 25221051,
+        "timestamp": "2025-03-21 09:32:09"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 74196350,
+        "timestamp": "2025-03-21 09:32:11"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 95853752,
+        "timestamp": "2025-03-21 10:17:14"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 22129320,
+        "timestamp": "2025-03-21 10:17:15"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 93730953,
+        "timestamp": "2025-03-21 10:17:16"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 90685011,
+        "timestamp": "2025-03-21 10:17:17"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 64331103,
+        "timestamp": "2025-03-21 10:17:18"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.95% loss exceeds 20.00% threshold",
+        "order_id": 36752385,
+        "timestamp": "2025-03-21 10:17:20"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 35382080,
+        "timestamp": "2025-03-21 11:17:22"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 66133231,
+        "timestamp": "2025-03-21 11:17:24"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 27754601,
+        "timestamp": "2025-03-21 11:17:25"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 15273251,
+        "timestamp": "2025-03-21 11:17:27"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 81549249,
+        "timestamp": "2025-03-21 11:17:28"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 85270077,
+        "timestamp": "2025-03-21 11:17:30"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 69878054,
+        "timestamp": "2025-03-21 12:17:32"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 25627209,
+        "timestamp": "2025-03-21 12:17:33"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 82213393,
+        "timestamp": "2025-03-21 12:17:34"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 40053934,
+        "timestamp": "2025-03-21 12:17:35"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 63703227,
+        "timestamp": "2025-03-21 12:17:37"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 89867334,
+        "timestamp": "2025-03-21 12:17:37"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 14018600,
+        "timestamp": "2025-03-21 13:17:39"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 28685677,
+        "timestamp": "2025-03-21 13:17:40"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 26101925,
+        "timestamp": "2025-03-21 13:17:41"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 62587587,
+        "timestamp": "2025-03-21 13:17:42"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 21706172,
+        "timestamp": "2025-03-21 13:17:43"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 90158863,
+        "timestamp": "2025-03-21 13:17:44"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 83346504,
+        "timestamp": "2025-03-21 14:17:46"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 83187191,
+        "timestamp": "2025-03-21 14:17:47"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 81331531,
+        "timestamp": "2025-03-21 14:17:48"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 85658991,
+        "timestamp": "2025-03-21 14:17:49"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 18146660,
+        "timestamp": "2025-03-21 14:17:50"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 66974171,
+        "timestamp": "2025-03-21 14:17:51"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 50622087,
+        "timestamp": "2025-03-21 15:17:57"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 87475687,
+        "timestamp": "2025-03-21 15:17:58"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 35830790,
+        "timestamp": "2025-03-21 15:17:59"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 86895528,
+        "timestamp": "2025-03-21 15:17:59"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 55769067,
+        "timestamp": "2025-03-21 15:18:00"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 58099281,
+        "timestamp": "2025-03-21 15:18:00"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 12784606,
+        "timestamp": "2025-03-21 16:18:11"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 60309485,
+        "timestamp": "2025-03-21 16:18:11"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 24064607,
+        "timestamp": "2025-03-21 16:18:12"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 21544740,
+        "timestamp": "2025-03-21 16:18:12"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 67766688,
+        "timestamp": "2025-03-21 16:18:13"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 65927172,
+        "timestamp": "2025-03-21 16:18:14"
+    },
+    {
+        "symbol": "AP250321P00002500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.96% loss exceeds 20.00% threshold",
+        "order_id": 36828567,
+        "timestamp": "2025-03-21 18:27:54"
+    },
+    {
+        "symbol": "ET250321P00005000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 41875803,
+        "timestamp": "2025-03-21 18:27:55"
+    },
+    {
+        "symbol": "GIS250321P00035000",
+        "action": "SELL",
+        "quantity": 12.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.97% loss exceeds 20.00% threshold",
+        "order_id": 91875976,
+        "timestamp": "2025-03-21 18:27:56"
+    },
+    {
+        "symbol": "HST250321P00009000",
+        "action": "SELL",
+        "quantity": 6.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 98799882,
+        "timestamp": "2025-03-21 18:27:57"
+    },
+    {
+        "symbol": "NOK250321P00000500",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -100.00% loss exceeds 20.00% threshold",
+        "order_id": 68678607,
+        "timestamp": "2025-03-21 18:27:58"
+    },
+    {
+        "symbol": "XLI250321P00064000",
+        "action": "SELL",
+        "quantity": 3.0,
+        "price": null,
+        "reasoning": "Stop loss triggered: -99.85% loss exceeds 20.00% threshold",
+        "order_id": 64286266,
+        "timestamp": "2025-03-21 18:27:58"
     }
 ]

@@ -33,7 +33,7 @@ EMAIL_PASSWORD = "Fordfriendsclub22"
 DEEPSEEK_API_KEY = "sk-6ab60858c77d42989ea28c76379f7c5a"
 
 # Watchlist symbols to monitor
-SYMBOLS = ["OXY", "KO", "SPY", "X"]  
+SYMBOLS = ['OXY', 'KO', 'SPY', 'X']  
 
 # Tradier account settings
 PRODUCTION_ACCOUNT_ID = "6YB52094"  # Production account ID 
@@ -46,18 +46,18 @@ DEBUG_API_RESPONSES = True
 
 # Trading parameters
 MAX_POSITIONS = 5  # Maximum number of open positions
-POSITION_SIZE = 0.05  # Percentage of account value per position (e.g., 0.05 = 5%)
-STOP_LOSS_PERCENT = 0.20  # Exit position if it loses this percentage (e.g., 0.20 = 20%)
-TAKE_PROFIT_PERCENT = 0.50  # Exit position if it gains this percentage (e.g., 0.50 = 50%)
-MAX_OPTION_DTE = 45  # Maximum days to expiration for option contracts
-MIN_OPTION_DTE = 14  # Minimum days to expiration for option contracts
+POSITION_SIZE = 0.527  # Percentage of account value per position
+STOP_LOSS_PERCENT = 0.2  # Exit position if it loses this percentage
+TAKE_PROFIT_PERCENT = 0.5  # Exit position if it gains this percentage
+MAX_OPTION_DTE = 45  # Maximum days to expiration
+MIN_OPTION_DTE = 14  # Minimum days to expiration
 
 # API request retry settings
 MAX_RETRIES = 3  # Maximum number of retries for API requests
 RETRY_DELAY_SECONDS = 2  # Initial delay between retries (will be exponentially increased)
 
 # Trading activity settings
-CONFIDENCE_THRESHOLD = 0.70  # Minimum confidence to execute a trade (lowered to increase activity)
+CONFIDENCE_THRESHOLD = 0.7  # Minimum confidence to execute a trade
 MAX_DAILY_TRADES = 100  # Maximum number of trades per day
 ENABLE_OPPORTUNITY_FINDER = True  # Enable finding opportunities outside watchlist
 

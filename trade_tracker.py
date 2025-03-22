@@ -246,27 +246,49 @@ class TradeTracker:
         Returns:
             dict: Status information
         """
+        self.cleanup_expired_day_trades()
+        
+        # Calculate days to clear for each day trade
+        for day_trade in self.day_trades:
+            if 'exit_time' in day_trade and day_trade['exit_time']:
+                # Calculate 5 business days from exit time (approximately 7 calendar days)
+                clear_date = day_trade['exit_time'] + timedelta(days=7)
+                day_trade['days_to_clear'] = max(0, (clear_date - datetime.now()).days)
+        
         return {
-            'day_trade_count': self.get_day_trade_count(),
-            'can_day_trade': self.can_day_trade(),
-            'open_positions': len(self.trades),
+            'current_day_trades': len(self.day_trades),
+            'max_day_trades': self.max_trades,
+            'day_trades_remaining': max(0, self.max_trades - len(self.day_trades)),
             'recent_day_trades': [
                 {
                     'symbol': dt['symbol'],
-                    'date': dt['exit_time'].strftime('%Y-%m-%d'),
-                    'contracts': dt['contracts']
+                    'date': dt['exit_time'].strftime('%Y-%m-%d') if 'exit_time' in dt and dt['exit_time'] else 'Unknown',
+                    'days_to_clear': dt.get('days_to_clear', 0)
                 }
-                for dt in sorted(self.day_trades, key=lambda x: x['exit_time'], reverse=True)
+                for dt in self.day_trades
             ]
         }
+
+    def reset_day_trades(self):
+        """
+        Reset day trades count by clearing all recorded day trades
+        
+        Returns:
+            dict: Day trade status information after reset
+        """
+        original_count = len(self.day_trades)
+        self.day_trades = []
+        self.save_data()
+        logger.info(f"Reset day trades counter. Cleared {original_count} day trades.")
+        return self.get_status()
     
     def __str__(self):
         """String representation of the trade tracker status"""
         status = self.get_status()
         return (
-            f"Day Trades: {status['day_trade_count']}/{self.max_trades} in last 5 business days\n"
-            f"Can Day Trade: {'Yes' if status['can_day_trade'] else 'No'}\n"
-            f"Open Positions: {status['open_positions']}"
+            f"Day Trades: {status['current_day_trades']}/{self.max_trades} in last 5 business days\n"
+            f"Can Day Trade: {'Yes' if self.can_day_trade() else 'No'}\n"
+            f"Open Positions: {len(self.trades)}"
         )
 
 
